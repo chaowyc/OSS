@@ -1,13 +1,16 @@
 filename='AMQ 5.3.0.xlsx';  %这里输入文件名
 dateType='week';%按什么时间段进行统计,可取参数：week/month/day
 
-[FindTime]=getFindDate(filename);%输入：excel文件，要求第E列为故障发现时间 统一时间格式
+%% 输入：excel文件，要求第E列为故障发现时间 统一时间格式并按照时间先后顺序排序
+[FindTime]=getFindDate(filename);
+
 %%%%%%%%%%%%%%%%绘制部分%%%%%%%%%%%%%%%%
-%绘制m(t)
+%% 绘制m(t)
  [ mt ] = getMT( FindTime ,dateType); 
 figure;
 plot(mt,'k-');
 title('函数mt');
+
 %绘制ControlChart
 C_chart_Draw(filename,dateType);
 %绘制Laplace_Draw

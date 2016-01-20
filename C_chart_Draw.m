@@ -1,6 +1,7 @@
+function C_chart_Draw(filename,datatype)
+
 % files={'AMQ 5.3.0.xlsx','AMQ 5.4.0.xlsx','AMQ 5.6.0.xlsx','AMQ 5.9.0.xlsx','AMQ 5.11.0.xlsx','Zookeeper 3.0.0.xlsx','Zookeeper 3.3.3.xlsx','Zookeeper 3.4.0.xlsx','Zookeeper 3.4.5.xlsx','Zookeeper 3.5.0.xlsx'};
 %files={'AMQ 5.3.0.xlsx'};
-function C_chart_Draw(filename,datatype)
 % for i=1:1:length(files)
 %     filename=files{1,i};
     findDate= getFindDate(filename);
