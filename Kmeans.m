@@ -38,9 +38,7 @@ clear mt;
 mt=mttmp;
 clear mttmp;
 
-
-
-
+%%
 past=0;
 now=0;
 ay=min(mt);
@@ -56,6 +54,7 @@ for i=1:length(mt)
         cx=i;
     end
 end
+
 while bx==0
     by=by+1;
     for i=1:length(mt)
@@ -65,6 +64,7 @@ while bx==0
     end
 end
 
+%% 
 for i=1:length(mt)
     x(i,1)=i;
     y(i,1)=mt(i,1);
@@ -116,7 +116,8 @@ for k=1:1:3000
         now=0;
     end 
 end
-p=[b(1,1);c(1,1)];
+figure;
+p=[b(1,1);c(1,1)]
 b=sort(b,1);
 plot(a(:,1),a(:,2),'r-',b(:,1),b(:,2),'b-',c(:,1),c(:,2),'g-','LineWidth',1);
 xlabel('Time(weeks)','fontsize',12);

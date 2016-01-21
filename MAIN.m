@@ -1,4 +1,4 @@
-filename='AMQ 5.3.0.xlsx';  %这里输入文件名
+filename='AMQ 5.4.0.xlsx';  %这里输入文件名
 dateType='week';%按什么时间段进行统计,可取参数：week/month/day
 
 %% 输入：excel文件，要求第E列为故障发现时间 统一时间格式并按照时间先后顺序排序
@@ -18,7 +18,7 @@ Laplace_Draw(filename,dateType);
 %绘制2段Kmeans----返回的p是拐点,returna,returnb,returnc是分段后的累计故障数
 % [ p,returna,returnb ] = Kmeans2( FindTime,dateType);
 %绘制3段Kmeans----返回的p是拐点,returna,returnb,returnc是分段后的累计故障数
-%[ p,returna,returnb,returnc ] = Kmeans( FindTime,dateType);
+[ p,returna,returnb,returnc ] = Kmeans( FindTime,dateType);
 
 %%%%%%%%%%%%%%%%拟合部分%%%%%%%%%%%%%%%%
 %!!!!!需要调初始参数的部分

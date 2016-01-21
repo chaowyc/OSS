@@ -40,6 +40,7 @@ end
 clear mt;
 mt=mttmp;
 clear mttmp;
+
 %开始MLE拟合
 % 两段delayed+一段G-O
 % canshu=0.9;

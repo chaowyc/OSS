@@ -102,7 +102,7 @@ for k=1:1:3000
         now=0;
     end 
 end
-p=[c(1,1)];
+p=[c(1,1)]
 
  plot(a(:,1),a(:,2),'r.',c(:,1),c(:,2),'g.','LineWidth',1);
   xlabel('Time(weeks)','fontsize',12);
