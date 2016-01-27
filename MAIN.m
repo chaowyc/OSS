@@ -31,21 +31,22 @@ Laplace_Draw(filename,dateType);
 %当answer的最后一个参数最大时认为得到了最优的参数估计
 
 %主要参数
- a_1=250;
+ a_1=80;
  b_1=0.003;
  b_2=0.051;
  b_3=0.06;
 %主要参数
 
- t1=161;
- t2=193;
+ t1=54;
+ t2=61;
  
  a_0=0.1;
  b1_0=0.0001;
  b2_0=0.0001;
  b3_0=0.001;
- 
  canshu=0.9;
+%[~, anlysize_result, answer] = MLE_old(a_1,b_1,b_2,b_3,a_0,b1_0,b2_0,b3_0, canshu,FindTime,dateType)
+
 [ ~ ,anlysize_result,answer] =MLE_DDG( a_1,b_1,b_2,b_3,a_0,b1_0,b2_0,b3_0,t1,t2,canshu,FindTime,dateType)
 
 %y->~，节省时间
