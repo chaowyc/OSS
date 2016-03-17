@@ -1,20 +1,19 @@
-function [ y,anlysize_result,answer ] = MLED(parameter, dataset)
-%% DSS 模型参数估计
-% 参数 a b
-%
+clear;
+%% 数据
+% mydata=importdata('lab.xlsx');
+% x = zeros(size(mydata, 1), 0);
+% mt = zeros(size(mydata, 1), 0);
+% x(:, 1) = mydata(:, 1);
+% mt(:, 1) = mydata(:, 2);
+% figure;
+% scatter(x, mt, 'k');
 
-%% 验证
-data=importdata('lab.xlsx');
-x(:, 1) = data(:, 1);
-y(:, 1) = data(:, 2);
-figure;
-scatter(x, y, 'k');
-
+mt = simForDSS();
 
 %开始MLE拟合
 % delayed模型
 canshu=0.9;
-bugcount=y(1:ceil(length(y)*canshu));
+bugcount=mt(1:ceil(length(mt)*canshu));
 % t1=length(a);
 % t2=length(a)+length(b);
 
@@ -22,8 +21,7 @@ bugcount=y(1:ceil(length(y)*canshu));
 % a_1=204.8;
 % b_1=0.02;
 a_1 = 100;
-b_1 = 0.003;
-
+b_1 = 0.01;
 a=a_1;
 b1=b_1;
 
@@ -39,10 +37,10 @@ b1_hat=b1;
 tmp=1;
 B=zeros(length(bugcount),1);
 LLF_con=zeros(length(bugcount)-1,1);
-for x=0:5000
-    a=a_1+a_0*(x);
-    for y=0:1000
-        b1=b_1+b1_0*(y);
+for i = 1:2000
+    a=a_1+a_0*(i);
+    for j=1:100
+        b1=b_1+b1_0*(j);
         B(1)=(1+b1)*exp(-b1);
         for t=2:length(bugcount) %求解极大似然函数
             B(t)=(1+b1*t).*exp(-b1*t);
@@ -50,7 +48,7 @@ for x=0:5000
         end
         LLF_con_sum=sum(LLF_con)+log(a)*bugcount(length(bugcount))-a*(1-B(length(bugcount)));
         clear MLE_result
-%         MLE_result(tmp,:)=[x,a,b1,LLF_con_sum];
+        %MLE_result(tmp,:)=[x,a,b1,LLF_con_sum];
         tmp=tmp+1;
         if isreal(LLF_con_sum)==0
             break;
@@ -61,7 +59,7 @@ for x=0:5000
             b1_hat=b1;
         end
     end
-%     display(x);
+%    display(x);
 end
 
 MLE_beta=[a_hat,b1_hat,LLF_max]
@@ -70,15 +68,17 @@ clear a a_0 b1 b1_0
 clear a_1 b_1
 clear LLF_max LLF_con LLF_con_sum B
 
-beta=MLE_beta(1:2);
-x=1:length(mt);
+%beta=MLE_beta(1:2);
+%beta = [750, 0.0390];
+beta = [750, 0.0390];
+x=1:21;
 x=x';
-%delay+delay+G-O
+%delay
 cfit = beta(1).*(1-(1+beta(2)*x).*exp(-beta(2)*x));
 % figure
 % [a,b,c]=Em(mt);
-% hold on;
-% plot(x,cfit,'r-')
+hold on;
+plot(x,cfit,'r-')
 y=cfit;
 %拟合分析
 real_data=mt;
@@ -95,7 +95,12 @@ SSE=sum(tmp1); %和方差
 MSE=SSE/nihe_len; %均方差
 RMSE=sqrt(MSE); %均方根
 R_squre=1-SSE/sum(tmp2);%回归曲线方程的相关指数 预测差值除以实际差值
-anlysize_result=[SSE;MSE;RMSE;R_squre];
-answer=MLE_beta';
-end
 
+yuce_len = length(real_data) - nihe_len;
+tmp3 = zeros(yuce_len, 1);
+for i = nihe_len :1: length(real_data)
+    tmp3(i, 1) = (real_data(i,1)-cfit(i,1))^2;
+end
+yuce_SSE = sum(tmp3)
+anlysize_result=[SSE;yuce_SSE;MSE;RMSE;R_squre];
+answer=MLE_beta';

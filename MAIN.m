@@ -6,15 +6,15 @@ dateType='week';%按什么时间段进行统计,可取参数：week/month/day
 
 %%%%%%%%%%%%%%%%绘制部分%%%%%%%%%%%%%%%%
 %% 绘制m(t)
- [ mt ] = getMT( FindTime ,dateType); 
+% [ mt ] = getMT( FindTime ,dateType); 
 figure;
 plot(mt,'k-');
 title('函数mt');
 
 %绘制ControlChart
-C_chart_Draw(filename,dateType);
+%C_chart_Draw(filename,dateType);
 %绘制Laplace_Draw
-Laplace_Draw(filename,dateType);
+%Laplace_Draw(filename,dateType);
 %绘制2段Kmeans----返回的p是拐点,returna,returnb,returnc是分段后的累计故障数
 % [ p,returna,returnb ] = Kmeans2( FindTime,dateType);
 %绘制3段Kmeans----返回的p是拐点,returna,returnb,returnc是分段后的累计故障数
@@ -31,24 +31,24 @@ Laplace_Draw(filename,dateType);
 %当answer的最后一个参数最大时认为得到了最优的参数估计
 
 %主要参数
- a_1=80;
+ a_1=88;
  b_1=0.003;
  b_2=0.051;
  b_3=0.06;
 %主要参数
 
- t1=54;
- t2=61;
+ t1=55;
+ t2=83;
  
  a_0=0.1;
  b1_0=0.0001;
  b2_0=0.0001;
  b3_0=0.001;
  canshu=0.9;
-%[~, anlysize_result, answer] = MLE_old(a_1,b_1,b_2,b_3,a_0,b1_0,b2_0,b3_0, canshu,FindTime,dateType)
+[~, anlysize_result, answer] = MLE_old(a_1,b_1,b_2,b_3,a_0,b1_0,b2_0,b3_0, canshu,FindTime,dateType)
 
-[ ~ ,anlysize_result,answer] =MLE_DDG( a_1,b_1,b_2,b_3,a_0,b1_0,b2_0,b3_0,t1,t2,canshu,FindTime,dateType)
-
+%[ ~ ,anlysize_result,answer] =MLE_DDG( a_1,b_1,b_2,b_3,a_0,b1_0,b2_0,b3_0,t1,t2,canshu,FindTime,dateType)
+%[ ~, analysize_result, answer] = MLED(a_1, b_1, a_0, b1_0, canshu, FindTime, dateType)
 %y->~，节省时间
  
 %得到最优参数后，可以使用下面的代码将拟合前和拟合后的进行比较 

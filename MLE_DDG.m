@@ -140,18 +140,22 @@ cfit=y;
 nihe_len=ceil(canshu*length(real_data));
 junzhi=sum(real_data(1:nihe_len,1))/length(real_data);
 tmp1=zeros(nihe_len,1);
-tmp2=zeros(nihe_len,1);
+tmp2=zeros(nihe_len,1); 
 for i=1:1:nihe_len
     tmp1(i,1)=(real_data(i,1)-cfit(i,1))^2;  
     tmp2(i,1)=(real_data(i,1)-junzhi)^2;
 end
-SSE=sum(tmp1); %和方差
+SSE=sum(tmp1) %和方差
 MSE=SSE/nihe_len; %均方差
 RMSE=sqrt(MSE); %均方根
 R_squre=1-SSE/sum(tmp2);%回归曲线方程的相关指数 预测差值除以实际差值
-anlysize_result=[SSE;MSE;RMSE;R_squre];
-answer=MLE_beta';
 
-
+yuce_len = length(real_data) - nihe_len;
+tmp3 = zeros(yuce_len, 1);
+for i = nihe_len :1: length(real_data)
+    tmp3(i, 1) = (real_data(i,1)-cfit(i,1))^2;
 end
-
+yuce_SSE = sum(tmp3)
+anlysize_result=[SSE;yuce_SSE;MSE;RMSE;R_squre];
+answer=MLE_beta';
+end
