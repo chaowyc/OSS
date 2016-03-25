@@ -22,7 +22,7 @@ function varargout = mainGUI(varargin)
 
 % Edit the above text to modify the response to help mainGUI
 
-% Last Modified by GUIDE v2.5 17-Mar-2016 04:33:42
+% Last Modified by GUIDE v2.5 25-Mar-2016 20:31:43
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -400,9 +400,11 @@ elseif(value == 2)
     plot(handles.axes1, [1:parameter(11, 1)]',mt, '-b', [1:parameter(11, 1)]', dataset, '-r');
 elseif(value == 3)
     [dataset, mt] = simFor1CP(parameter);
+    handles.sim1CPdataset = dataset;
     plot(handles.axes1, [1:parameter(11, 1)]',mt, '-b', [1:parameter(11, 1)]', dataset, '-r');
 elseif(value == 4)
     [dataset, mt] = simFor2CP(parameter);
+    handles.sim2CPdataset = dataset;
     plot(handles.axes1, [1:parameter(11, 1)]',mt, '-b', [1:parameter(11, 1)]', dataset, '-r');
 end
 guidata(hObject,handles);
@@ -424,3 +426,61 @@ elseif(modelValue == 3)
 elseif(modelValue == 4)
     MLE_DDG(parameter, dataset);
 end
+
+
+% --- Executes on button press in savedata.
+function savedata_Callback(hObject, eventdata, handles)
+% hObject    handle to savedata (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+value = handles.model;
+if(value == 1)
+    dataset = handles.simGOdataset;
+    [filename,pathname,filterindex]=...
+           uiputfile({'*.xlsx'},'save data');
+    if filterindex==0
+        return;
+    else
+        str=[pathname filename];
+        xlswrite(str, dataset);  
+    end
+elseif(value == 2)
+    dataset = handles.simDSSdataset;
+    [filename,pathname,filterindex]=...
+           uiputfile({'*.xlsx'},'save data');
+    if filterindex==0
+        return;
+    else
+        str=[pathname filename];
+        xlswrite(str, dataset);  
+    end
+elseif(value == 3)
+    dataset = handles.sim1CPdataset;
+    [filename,pathname,filterindex]=...
+           uiputfile({'*.xlsx'},'save data');
+    if filterindex==0
+        return;
+    else
+        str=[pathname filename];
+        xlswrite(str, dataset);  
+    end
+    
+elseif(value == 4)
+    dataset = handles.sim2CPdataset;
+    [filename,pathname,filterindex]=...
+           uiputfile({'*.xlsx'},'save data');
+    if filterindex==0
+        return;
+    else
+        str=[pathname filename];
+        xlswrite(str, dataset);  
+    end
+end
+guidata(hObject,handles);
+
+
+
+
+
